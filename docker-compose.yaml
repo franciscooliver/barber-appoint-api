@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: api-barber-appoint
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/usr/src/app # Mapeia os arquivos locais para o container
+      - /usr/src/app/node_modules # Garante que o node_modules seja gerado no container
+    env_file:
+      - .env  # Mapeando o arquivo .env para o container
+    command: npm run start:dev
+    environment:
+      NODE_ENV: development
+
+  # db:
+  #   image: postgres:15-alpine
+  #   container_name: api-db
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_DB: nest_api
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+
+# volumes:
+#   db_data:

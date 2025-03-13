@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: barber-appoint
+  labels:
+    app: barber-appoint
+spec:
+  selector:
+    matchLabels:
+      app: barber-appoint
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: "barber-appoint"
+    spec:
+      containers:
+        - name: barber-appoint-api
+          image: "franciscoalves90/barber-appoint:v2"
+#          env:
+#            - name: PORT
+#              value: "3001"
+#            - name: DATABASE_PORT
+#              value: "5432"
+#            - name: DATABASE_HOST
+#              value: "aws-0-us-west-1.pooler.supabase.com"
+#            - name: DATABASE_NAME
+#              value: "postgres"
+#            - name: DATABASE_USER
+#              value: "postgres.udjufdacovyxhxsbywmg"
+#            - name: DATABASE_PASSWORD
+#              value: "RgwhKQ3nHmsbd3KV"
+#            - name: JWT_SECRET
+#              value: "YmFyYmVyYXBwb2ludEAyMDI0"
+          envFrom:
+            - configMapRef:
+                name: barber-appoint-configmap
+            - secretRef:
+                name: barber-appoint-secret

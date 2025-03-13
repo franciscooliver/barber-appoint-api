@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: barber-appoint-service
+spec:
+  selector:
+    app: barber-appoint
+  type: LoadBalancer
+  ports:
+  - name: barber-appoint-service
+    port: 80
+    targetPort: 3001
+    protocol: TCP
