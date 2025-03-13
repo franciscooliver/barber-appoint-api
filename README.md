@@ -26,48 +26,176 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+# Barber Appointment API
+
+## Description
+
+A modern REST API built with NestJS for managing barbershop appointments, services, and user management.
+
+## Technologies
+
+- **Framework:** NestJS v10
+- **Language:** TypeScript
+- **Database:** PostgreSQL (with TypeORM)
+- **Authentication:** JWT with Passport
+- **Containerization:** Docker & Kubernetes
+- **Documentation:** Swagger (OpenAPI)
+- **Testing:** Jest
+
+## Architecture
+
+The project follows a modular architecture with clear separation of concerns:
+
+```
+src/
+├── modules/               # Feature modules
+│   ├── appointments/     # Appointments management
+│   ├── auth/            # Authentication & authorization
+│   ├── barbershops/     # Barbershop management
+│   ├── collaborators/   # Barbers/staff management
+│   ├── services/        # Barbershop services
+│   └── users/          # User management
+├── common/              # Shared resources
+│   ├── decorators/     # Custom decorators
+│   ├── exceptions/     # Exception filters
+│   └── interceptors/   # Response interceptors
+└── database/           # Database configurations & seeds
+```
+
+## Features
+
+- User Authentication (JWT)
+- Barbershop Management
+- Appointment Scheduling
+- Service Management
+- Staff/Collaborator Management
+- Address Management
+- Token Blacklisting
+- Error Handling
+- Response Transformation
+
+## Prerequisites
+
+- Node.js v20+
+- Docker & Docker Compose
+- Kubernetes (optional)
+- PostgreSQL
+
+## Environment Variables
+
+Copy `.env-example` to `.env` and configure:
+
+```bash
+PORT=3001
+DATABASE_HOST=your-host
+DATABASE_PORT=5432
+DATABASE_USER=your-user
+DATABASE_PASSWORD=your-password
+DATABASE_NAME=your-database
+JWT_SECRET=your-secret
+```
+
 ## Installation
 
 ```bash
-$ yarn install
+# Install dependencies
+$ npm install
 ```
 
-## Running the app
+## Running the Application
+
+### Development
 
 ```bash
-# development
-$ yarn run start
+# Development mode
+$ npm run start:dev
 
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+# Using Docker Compose
+$ docker compose exec api npm install
+$ docker compose up
 ```
 
-## Test
+### Production
 
 ```bash
-# unit tests
-$ yarn run test
+# Build production image
+$ docker compose -f docker compose-prod.yaml build
 
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+# Run production container
+$ docker compose -f docker compose-prod.yaml up
 ```
 
-## Support
+### Kubernetes Deployment
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+# Apply Kubernetes configurations
+$ kubectl apply -f k8s/
 
-## Stay in touch
+# Check deployment status
+$ kubectl get pods
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Testing
+
+```bash
+# Unit tests
+$ npm run test
+
+# Test coverage
+$ npm run test:cov
+
+# E2E tests
+$ npm run test:e2e
+```
+
+## API Endpoints
+
+### Auth
+- `POST /auth/login` - User login
+- `POST /auth/logout` - User logout
+
+### Users
+- `GET /users` - List users
+- `POST /users` - Create user
+- `GET /users/:id` - Get user details
+
+### Barbershops
+- `GET /barbershops` - List barbershops
+- `POST /barbershops` - Create barbershop
+- `GET /barbershops/:id` - Get barbershop details
+
+### Appointments
+- `GET /appointments` - List appointments
+- `POST /appointments` - Create appointment
+- `PATCH /appointments/:id` - Update appointment
+- `DELETE /appointments/:id` - Cancel appointment
+
+### Services
+- `GET /services` - List services
+- `POST /services` - Create service
+- `GET /services/:id` - Get service details
+
+## Project Structure
+
+```
+backend/
+├── src/                 # Source code
+├── test/               # Test files
+├── k8s/                # Kubernetes configurations
+├── docker compose.yaml # Development Docker Compose
+├── Dockerfile         # Production Docker build
+├── Dockerfile.dev     # Development Docker build
+└── tsconfig.json     # TypeScript configuration
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+[MIT License](LICENSE)
