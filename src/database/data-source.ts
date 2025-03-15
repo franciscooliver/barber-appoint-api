@@ -6,6 +6,9 @@ import { Collaborator } from "@modules/collaborators/entities/collaborator.entit
 import { Service } from "@modules/services/entities/service.entity";
 import { User } from "@modules/users/entities/user.entity";
 import { DataSource } from "typeorm";
+import { config } from 'dotenv';
+
+config();
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
@@ -18,4 +21,13 @@ export const AppDataSource = new DataSource({
         User, TokenBlacklist, Collaborator, Address, Barbershop, Service, Appointment
     ],
     synchronize: true,
+    extra: {
+        poolSize: 20,
+        connectionTimeoutMillis: 10000, // 10 seconds
+        query_timeout: 10000,
+        statement_timeout: 10000,
+        max: 20,
+        connectionRetryAttempts: 5,
+        connectionRetryDelay: 3000,
+    },
 });

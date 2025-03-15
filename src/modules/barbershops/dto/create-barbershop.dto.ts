@@ -1,13 +1,16 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsString, IsNotEmpty, ValidateNested, IsOptional, IsObject } from 'class-validator';
+import { Type } from 'class-transformer';
+import { CreateAddressDto } from '@modules/addresses/dto/create-address.dto';
+import { Address } from '@modules/addresses/entities/address.entity';
 
 export class CreateBarbershopDto {
-  @IsNotEmpty()
   @IsString()
+  @IsNotEmpty()
   name: string;
 
-  @IsNotEmpty()
-  @IsString()
-  address: string;
+  @IsObject()
+  // @Type(() => CreateAddressDto)
+  address: Address;
 
   @IsOptional()
   ownerId: number;

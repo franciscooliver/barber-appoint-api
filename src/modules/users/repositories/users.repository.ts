@@ -24,9 +24,7 @@ export class UsersRepository {
     return this.repository.findOne({ where: params });
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
-    console.log('email', email);
-    
+  async findOneByEmail(email: string): Promise<User | undefined> {    
     return this.repository
       .createQueryBuilder('user')
       .addSelect('user.password')

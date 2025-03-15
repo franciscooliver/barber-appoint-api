@@ -7,6 +7,7 @@ import { GetUser } from '@common/decorators/getuser.decorator';
 import { User } from '@modules/users/entities/user.entity';
 import { SuccessResponseInterceptor } from '@common/interceptors/success-response.interceptor';
 import { HttpExceptionFilter } from '@common/exceptions/http-exception.filter';
+import { UpdateStatusDto } from '../dto/update-status.dto';
 
 @Controller('appointments')
 @UseInterceptors(SuccessResponseInterceptor)
@@ -44,5 +45,20 @@ export class AppointmentsController {
     @Delete(':id')
     remove(@Param('id') id: string) {
         return this.appointmentsService.remove(+id);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Post(':id/cancel')
+    cancelAppointment(@Param('id') id: string) {
+        return this.appointmentsService.cancelAppointment(+id);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Patch(':id/status')
+    updateStatus(
+        @Param('id') id: string,
+        @Body() updateStatusDto: UpdateStatusDto
+    ) {
+        return this.appointmentsService.updateStatus(+id, updateStatusDto);
     }
 }

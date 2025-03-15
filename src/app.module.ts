@@ -17,10 +17,10 @@ import { CollaboratorsModule } from '@modules/collaborators/collaborators.module
       isGlobal: true,
       envFilePath: '.env',
     }),
-    AuthModule,
-    UsersModule,
     // Ajusta o data-source usando as opções definidas em AppDataSource
     TypeOrmModule.forRoot(AppDataSource.options),
+    AuthModule,
+    UsersModule,
     BarbershopsModule,
     AppointmentsModule,
     ServicesModule,
@@ -36,7 +36,8 @@ export class AppModule implements NestModule {
         'appointments', 
         'barbershops', 
         'users', 
-        'collaborator'
-      ); // Aplica o middleware a módulos específicos
+        'collaborators',
+        'services'
+      ); // Remove 'api' prefix from routes
   }
 }

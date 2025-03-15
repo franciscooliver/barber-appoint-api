@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Service } from '@modules/services/entities/service.entity';
@@ -23,5 +23,18 @@ export class ServicesService {
 
   async findOne(id: number): Promise<Service> {
     return this.servicesRepository.findById(id);
+  }
+
+  async toggleStatus(id: number): Promise<Service> {
+    const service = await this.servicesRepository.findById(id);
+    if (!service) {
+      throw new NotFoundException(`Service with ID ${id} not found`);
+    }
+    
+    return this.servicesRepository.updateStatus(id, !service.isActive);
+  }
+
+  async findActive(): Promise<Service[]> {
+    return this.servicesRepository.findActive();
   }
 }

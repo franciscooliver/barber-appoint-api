@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Patch } from '@nestjs/common';
 import { ServicesService } from '@modules/services/services/services.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateServiceDto } from '@modules/services/dto/create-service.dto';
@@ -14,6 +14,12 @@ export class ServicesController {
   }
 
   @UseGuards(AuthGuard('jwt'))
+  @Get('active')
+  findActive() {
+    return this.servicesService.findActive(); 
+  }
+
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() createServiceDto: CreateServiceDto) {
     return this.servicesService.create(createServiceDto);
@@ -23,5 +29,11 @@ export class ServicesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.servicesService.findOne(+id);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id/toggle-status')
+  toggleStatus(@Param('id') id: string) {
+    return this.servicesService.toggleStatus(+id);
   }
 }

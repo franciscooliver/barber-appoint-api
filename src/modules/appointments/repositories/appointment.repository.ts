@@ -7,6 +7,7 @@ import { CreateAppointmentDto } from '@modules/appointments/dto/create-appointme
 import { User } from '@modules/users/entities/user.entity';
 import { UpdateAppointmentDto } from '@modules/appointments/dto/update-appointment.dto';
 import { Service } from '@modules/services/entities/service.entity';
+import { UpdateStatusDto } from '../dto/update-status.dto';
 
 @Injectable()
 export class AppointmentRepository {
@@ -56,6 +57,17 @@ export class AppointmentRepository {
         }
 
         Object.assign(appointment, updateAppointmentDto);
+        return this.repository.save(appointment);
+    }
+
+    async updateStatus(id: number, updateStatusDto: UpdateStatusDto): Promise<Appointment> {
+        const appointment = await this.findOne({id});
+
+        if (!appointment) {
+            throw new NotFoundException('Appointment not found');
+        }
+
+        appointment.status = updateStatusDto.status;
         return this.repository.save(appointment);
     }
 

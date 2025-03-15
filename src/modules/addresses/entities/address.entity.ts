@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { User } from '@modules/users/entities/user.entity';
 import { Collaborator } from '@modules/collaborators/entities/collaborator.entity';
 
@@ -19,11 +19,9 @@ export class Address {
   @Column()
   zipcode: string;
 
-  @OneToOne(() => User, (user) => user.address, { nullable: true })
-  @JoinColumn()
-  user?: User;
+  @OneToOne(() => User, (user) => user.address)
+  user: User;
 
-  @OneToOne(() => Collaborator, (collaborator) => collaborator.address, { nullable: true })
-  @JoinColumn()
-  collaborator?: Collaborator;
+  @OneToOne(() => Collaborator, (collaborator) => collaborator.address)
+  collaborator: Collaborator;
 }

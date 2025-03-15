@@ -12,6 +12,12 @@ export class Service {
   @Column('decimal', { precision: 5, scale: 2 })
   price: number;
 
+  @Column('int', { name: 'duration_in_minutes' })
+  duration: number;
+
+  @Column({ default: true })
+  isActive: boolean;
+
   @ManyToOne(() => Barbershop, (barbershop) => barbershop.services)
   barbershop: Barbershop;
 }

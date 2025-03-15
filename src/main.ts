@@ -10,6 +10,7 @@ async function bootstrap() {
   await AppDataSource.initialize(); // Inicializa o DataSource para carregar os metadados
 
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api'); // Add global prefix
   app.enableCors();
 
   // Aplicar Interceptor para respostas de sucesso

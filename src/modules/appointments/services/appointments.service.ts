@@ -1,4 +1,4 @@
-import { ClassSerializerInterceptor, Injectable, UseInterceptors } from '@nestjs/common';
+import { ClassSerializerInterceptor, Injectable, UseInterceptors, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Appointment } from '@modules/appointments/entities/appointment.entity';
 import { CreateAppointmentDto } from '@modules/appointments/dto/create-appointment.dto';
 import { UpdateAppointmentDto } from '@modules/appointments/dto/update-appointment.dto';
@@ -6,6 +6,8 @@ import { AppointmentRepository } from '@modules/appointments/repositories/appoin
 import { BarbershopsRepository } from '@modules/barbershops/repositories/barbershops.repository';
 import { UsersRepository } from '@modules/users/repositories/users.repository';
 import { ServicesRepository } from '@modules/services/repositories/service.repository';
+import { UpdateStatusDto } from '../dto/update-status.dto';
+import { AppointmentStatus } from '../types/appointment-status.enum';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Injectable()
@@ -41,5 +43,37 @@ export class AppointmentsService {
 
     async remove(id: number): Promise<void> {
         return this.repositoty.delete(id);
+    }
+
+    async cancelAppointment(id: number): Promise<Appointment> {
+        const appointment = await this.repositoty.findOne({id});
+        
+        if (!appointment) {
+            throw new NotFoundException('Appointment not found');
+        }
+
+        if (appointment.status === AppointmentStatus.CANCELLED) {
+            throw new BadRequestException('Appointment is already cancelled');
+        }
+
+        if (appointment.status === AppointmentStatus.COMPLETED) {
+            throw new BadRequestException('Cannot cancel completed appointment');
+        }
+
+        return this.repositoty.updateStatus(id, { status: AppointmentStatus.CANCELLED });
+    }
+
+    async updateStatus(id: number, updateStatusDto: UpdateStatusDto): Promise<Appointment> {
+        const appointment = await this.repositoty.findOne({id});
+        
+        if (!appointment) {
+            throw new NotFoundException('Appointment not found');
+        }
+
+        if (appointment.status === AppointmentStatus.CANCELLED && updateStatusDto.status !== AppointmentStatus.SCHEDULED) {
+            throw new BadRequestException('Cannot update status of cancelled appointment');
+        }
+
+        return this.repositoty.updateStatus(id, updateStatusDto);
     }
 }

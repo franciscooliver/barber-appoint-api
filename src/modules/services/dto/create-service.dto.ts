@@ -1,5 +1,5 @@
 import { Barbershop } from '@modules/barbershops/entities/barbershop.entity';
-import { IsString, IsNumber, Min, Max, IsNotEmpty, isNotEmpty, IsObject } from 'class-validator';
+import { IsString, IsNumber, Min, Max, IsNotEmpty, IsObject, IsBoolean, IsOptional } from 'class-validator';
 
 export class CreateServiceDto {
   @IsString()
@@ -17,4 +17,8 @@ export class CreateServiceDto {
   @IsObject()
   @IsNotEmpty()
   barbershop: Barbershop; 
+
+  @IsBoolean()
+  @IsOptional()
+  isActive: boolean = true; // Valor padrão true caso não seja informado
 }

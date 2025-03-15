@@ -37,14 +37,18 @@ export class BarbershopsRepository {
             throw new NotFoundException('Owner not found');
         }
 
-        // Criação da barbearia sem o campo id
-        const barbershop = await this.repository.create({
+        const barbershop = this.repository.create({
             ...createBarbershopDto,
-            owner, // Adiciona o proprietário como um objeto User
+            owner,
         });
 
-        const newBarbershop = await this.repository.create(barbershop);
-        return this.repository.save(newBarbershop);
+        const savedBarbershop = await this.repository.save(barbershop);
+        
+        // Retorna a barbearia com todas as relações necessárias
+        return this.repository.findOne({
+            where: { id: savedBarbershop.id },
+            relations: ['owner', 'address']
+        });
     }
 
     async update(id: number, updateBarbershopDto: UpdateBarbershopDto): Promise<void> {

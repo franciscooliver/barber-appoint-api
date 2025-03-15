@@ -1,7 +1,8 @@
-import { IsNotEmpty, IsDateString, IsString, IsNumber, IsObject } from 'class-validator';
+import { IsNotEmpty, IsDateString, IsString, IsNumber, IsObject, IsOptional } from 'class-validator';
 import { Service } from '@modules/services/entities/service.entity';
 import { User } from '@modules/users/entities/user.entity';
 import { Barbershop } from '@modules/barbershops/entities/barbershop.entity';
+import { Collaborator } from '@modules/collaborators/entities/collaborator.entity';
 
 export class CreateAppointmentDto {
     user?: User;
@@ -23,4 +24,7 @@ export class CreateAppointmentDto {
 
     @IsString()
     status?: string;
+
+    @IsObject()
+    collaborator: Collaborator;
 }

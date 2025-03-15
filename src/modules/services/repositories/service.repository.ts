@@ -29,4 +29,15 @@ export class ServicesRepository {
     const newService = await this.repository.create(createServiceDto);
     return this.repository.save(newService);
   }
+
+  async updateStatus(id: number, isActive: boolean): Promise<Service> {
+    await this.repository.update(id, { isActive });
+    return this.findById(id);
+  }
+
+  findActive(): Promise<Service[]> {
+    return this.repository.find({
+      where: { isActive: true }
+    });
+  }
 }
