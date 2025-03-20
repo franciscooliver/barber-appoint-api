@@ -1,12 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { Barbershop } from '@modules/barbershops/entities/barbershop.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from '@modules/appointments/entities/appointment.entity';
 import { CreateAppointmentDto } from '@modules/appointments/dto/create-appointment.dto';
-import { User } from '@modules/users/entities/user.entity';
 import { UpdateAppointmentDto } from '@modules/appointments/dto/update-appointment.dto';
-import { Service } from '@modules/services/entities/service.entity';
 import { UpdateStatusDto } from '../dto/update-status.dto';
 
 @Injectable()
@@ -21,7 +18,9 @@ export class AppointmentRepository {
         return this.repository.createQueryBuilder('appointment')
           .innerJoinAndSelect('appointment.user', 'client')
           .leftJoinAndSelect('appointment.barbershop', 'barbershop')
+          .leftJoinAndSelect('barbershop.address', 'address')
           .leftJoinAndSelect('appointment.service', 'service')
+          .leftJoinAndSelect('appointment.collaborator', 'collaborator')
           .getMany();
     }
 

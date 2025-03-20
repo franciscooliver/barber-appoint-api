@@ -16,7 +16,9 @@ export class BarbershopsRepository {
     ) {}
 
     findAll(): Promise<Barbershop[]> {
-        return this.repository.find({ relations: ['owner'] });
+        return this.repository.find({ 
+            relations: ['owner', 'address'] 
+        });
     }
 
     findOne(params: any): Promise<Barbershop> {
