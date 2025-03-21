@@ -27,6 +27,7 @@ export class AuthService {
       email: user.email,
       isActive: user.isActive,
       role: user.role,
+      address: user.address,
       access_token: this.jwtService.sign(payload),  // Usa o JwtService com a chave configurada
     };
   }

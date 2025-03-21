@@ -7,6 +7,9 @@ export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ nullable: true })
+  country: string;
+
   @Column()
   street: string;
 
@@ -15,6 +18,9 @@ export class Address {
 
   @Column()
   state: string;
+
+  @Column({ nullable: true })
+  neighborhood: string;
 
   @Column()
   zipcode: string;

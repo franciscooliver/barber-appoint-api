@@ -28,6 +28,7 @@ export class UsersRepository {
     return this.repository
       .createQueryBuilder('user')
       .addSelect('user.password')
+      .leftJoinAndSelect('user.address', 'address')
       .where('user.email = :email', { email })
       .getOne();
   }
@@ -36,5 +37,19 @@ export class UsersRepository {
     const newUser = await this.repository.create(createUserDto);
     await this.repository.save(newUser);
     return this.findOne({ id: newUser.id });
+  }
+
+  async save(user: User): Promise<User> {
+    await this.repository
+      .createQueryBuilder()
+      .update(User)
+      .set(user)
+      .where("id = :id", { id: user.id })
+      .execute();
+    
+    return this.repository.findOne({
+      where: { id: user.id },
+      relations: ['address']
+    });
   }
 }
