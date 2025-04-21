@@ -54,6 +54,7 @@ src/
 │   ├── barbershops/     # Barbershop management
 │   ├── collaborators/   # Barbers/staff management
 │   ├── services/        # Barbershop services
+│   ├── settings/       # System settings management
 │   └── users/          # User management
 ├── common/              # Shared resources
 │   ├── decorators/     # Custom decorators
@@ -70,9 +71,22 @@ src/
 - Service Management
 - Staff/Collaborator Management
 - Address Management
+- System Settings Management
 - Token Blacklisting
 - Error Handling
 - Response Transformation
+
+## Address Fields
+
+The address entity now includes:
+
+- country: string
+- street: string
+- city: string
+- state: string
+- uf: string (2-letter state code)
+- neighborhood: string
+- zipcode: string
 
 ## Prerequisites
 
@@ -174,6 +188,14 @@ $ npm run test:e2e
 - `GET /services` - List services
 - `POST /services` - Create service
 - `GET /services/:id` - Get service details
+
+### Settings
+- `GET /settings` - Get system settings
+- `PUT /settings` - Update system settings
+- `GET /settings/working-hours` - Get barbershop working hours
+- `PUT /settings/working-hours` - Update working hours
+- `GET /settings/working-days` - Get working days configuration
+- `PUT /settings/working-days` - Update working days configuration
 
 ## Project Structure
 

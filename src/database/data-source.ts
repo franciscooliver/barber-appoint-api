@@ -7,6 +7,7 @@ import { Service } from "@modules/services/entities/service.entity";
 import { User } from "@modules/users/entities/user.entity";
 import { DataSource } from "typeorm";
 import { config } from 'dotenv';
+import { Settings } from "@modules/settings/entities/settings.entity";
 
 config();
 
@@ -18,12 +19,19 @@ export const AppDataSource = new DataSource({
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     entities: [
-        User, TokenBlacklist, Collaborator, Address, Barbershop, Service, Appointment
+        Address, 
+        User, 
+        TokenBlacklist, 
+        Collaborator, 
+        Barbershop, 
+        Service, 
+        Appointment,
+        Settings
     ],
     synchronize: true,
     extra: {
         poolSize: 20,
-        connectionTimeoutMillis: 10000, // 10 seconds
+        connectionTimeoutMillis: 10000,
         query_timeout: 10000,
         statement_timeout: 10000,
         max: 20,

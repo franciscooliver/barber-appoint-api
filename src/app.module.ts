@@ -10,6 +10,7 @@ import { ServicesModule } from '@modules/services/services.module';
 import { AuthMiddleware } from '@modules/auth/auth-middleware';
 import { AddressesModule } from '@modules/addresses/addresses.module';
 import { CollaboratorsModule } from '@modules/collaborators/collaborators.module';
+import { SettingsModule } from '@modules/settings/settings.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { CollaboratorsModule } from '@modules/collaborators/collaborators.module
     AppointmentsModule,
     ServicesModule,
     AddressesModule,
-    CollaboratorsModule
+    CollaboratorsModule,
+    SettingsModule
   ],
 })
 export class AppModule implements NestModule {
@@ -37,7 +39,8 @@ export class AppModule implements NestModule {
         'barbershops', 
         'users', 
         'collaborators',
-        'services'
+        'services',
+        'settings'
       ); // Remove 'api' prefix from routes
   }
 }
