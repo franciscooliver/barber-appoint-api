@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty, ValidateNested, IsOptional, IsObject } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  ValidateNested,
+  IsOptional,
+  IsObject,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateAddressDto } from '@modules/addresses/dto/create-address.dto';
 import { Address } from '@modules/addresses/entities/address.entity';

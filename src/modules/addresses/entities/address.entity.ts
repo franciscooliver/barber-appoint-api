@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  BeforeInsert,
+} from 'typeorm';
 import { User } from '@modules/users/entities/user.entity';
 import { Collaborator } from '@modules/collaborators/entities/collaborator.entity';
 
@@ -36,8 +42,8 @@ export class Address {
     if (this.uf) {
       this.uf = this.uf.toUpperCase();
       return;
-    } 
-    
+    }
+
     if (this.state) {
       this.uf = this.state.substring(0, 2).toUpperCase();
     }

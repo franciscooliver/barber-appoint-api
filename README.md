@@ -38,8 +38,10 @@ A modern REST API built with NestJS for managing barbershop appointments, servic
 - **Language:** TypeScript
 - **Database:** PostgreSQL (with TypeORM)
 - **Authentication:** JWT with Passport
-- **Containerization:** Docker & Kubernetes
-- **Documentation:** Swagger (OpenAPI)
+- **Encryption:** bcrypt
+- **Validation:** class-validator and class-transformer
+- **Containerization:** Docker & Docker Compose
+- **Documentation:** Swagger (OpenAPI) - In progress
 - **Testing:** Jest
 
 ## Architecture
@@ -49,6 +51,7 @@ The project follows a modular architecture with clear separation of concerns:
 ```
 src/
 ├── modules/               # Feature modules
+│   ├── addresses/        # Address management
 │   ├── appointments/     # Appointments management
 │   ├── auth/            # Authentication & authorization
 │   ├── barbershops/     # Barbershop management
@@ -66,19 +69,21 @@ src/
 ## Features
 
 - User Authentication (JWT)
+- Token Blacklisting
 - Barbershop Management
 - Appointment Scheduling
 - Service Management
 - Staff/Collaborator Management
 - Address Management
 - System Settings Management
-- Token Blacklisting
-- Error Handling
-- Response Transformation
+- Standardized Error Handling
+- Response Transformation with Interceptors
+- Initial Data Seeding
+- Input Validation with class-validator
 
 ## Address Fields
 
-The address entity now includes:
+The address entity includes:
 
 - country: string
 - street: string
@@ -92,8 +97,7 @@ The address entity now includes:
 
 - Node.js v20+
 - Docker & Docker Compose
-- Kubernetes (optional)
-- PostgreSQL
+- PostgreSQL (or Supabase connection)
 
 ## Environment Variables
 
@@ -125,7 +129,6 @@ $ npm install
 $ npm run start:dev
 
 # Using Docker Compose
-$ docker compose exec api npm install
 $ docker compose up
 ```
 
@@ -133,7 +136,7 @@ $ docker compose up
 
 ```bash
 # Build production image
-$ docker compose -f docker compose-prod.yaml build
+$ docker compose -f docker-compose-prod.yaml build
 
 # Run production container
 $ docker compose -f docker compose-prod.yaml up
@@ -165,46 +168,60 @@ $ npm run test:e2e
 ## API Endpoints
 
 ### Auth
-- `POST /auth/login` - User login
-- `POST /auth/logout` - User logout
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
 
 ### Users
-- `GET /users` - List users
-- `POST /users` - Create user
-- `GET /users/:id` - Get user details
+- `GET /api/users` - List users
+- `POST /api/users` - Create user
+- `GET /api/users/:id` - Get user details
 
 ### Barbershops
-- `GET /barbershops` - List barbershops
-- `POST /barbershops` - Create barbershop
-- `GET /barbershops/:id` - Get barbershop details
+- `GET /api/barbershops` - List barbershops
+- `POST /api/barbershops` - Create barbershop
+- `GET /api/barbershops/:id` - Get barbershop details
 
 ### Appointments
-- `GET /appointments` - List appointments
-- `POST /appointments` - Create appointment
-- `PATCH /appointments/:id` - Update appointment
-- `DELETE /appointments/:id` - Cancel appointment
+- `GET /api/appointments` - List appointments
+- `POST /api/appointments` - Create appointment
+- `PATCH /api/appointments/:id` - Update appointment
+- `DELETE /api/appointments/:id` - Cancel appointment
 
 ### Services
-- `GET /services` - List services
-- `POST /services` - Create service
-- `GET /services/:id` - Get service details
+- `GET /api/services` - List services
+- `POST /api/services` - Create service
+- `GET /api/services/:id` - Get service details
 
 ### Settings
-- `GET /settings` - Get system settings
-- `PUT /settings` - Update system settings
-- `GET /settings/working-hours` - Get barbershop working hours
-- `PUT /settings/working-hours` - Update working hours
-- `GET /settings/working-days` - Get working days configuration
-- `PUT /settings/working-days` - Update working days configuration
+- `GET /api/settings` - Get system settings
+- `PUT /api/settings` - Update system settings
+- `GET /api/settings/working-hours` - Get barbershop working hours
+- `PUT /api/settings/working-hours` - Update working hours
+- `GET /api/settings/working-days` - Get working days configuration
+- `PUT /api/settings/working-days` - Update working days configuration
 
-## Project Structure
+## Data Models
+
+### User
+- id: number
+- name: string
+- email: string
+- password: string (encrypted with bcrypt)
+- isActive: boolean
+- role: 'client' | 'barbershop'
+- barbershops: Barbershop[]
+- appointments: Appointment[]
+- address: Address
+
+### Project Structure
 
 ```
 backend/
 ├── src/                 # Source code
 ├── test/               # Test files
 ├── k8s/                # Kubernetes configurations
-├── docker compose.yaml # Development Docker Compose
+├── docker-compose.yaml # Development Docker Compose
+├── docker-compose-prod.yaml # Production Docker Compose
 ├── Dockerfile         # Production Docker build
 ├── Dockerfile.dev     # Development Docker build
 └── tsconfig.json     # TypeScript configuration

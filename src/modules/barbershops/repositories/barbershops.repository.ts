@@ -8,58 +8,62 @@ import { UpdateBarbershopDto } from '@modules/barbershops/dto/update-barbershop.
 
 @Injectable()
 export class BarbershopsRepository {
+  constructor(
+    @InjectRepository(Barbershop)
+    private repository: Repository<Barbershop>,
+    private readonly userRepository: UsersRepository,
+  ) {}
 
-    constructor(
-        @InjectRepository(Barbershop)
-        private repository: Repository<Barbershop>,
-        private readonly userRepository: UsersRepository
-    ) {}
+  findAll(): Promise<Barbershop[]> {
+    return this.repository.find({
+      relations: ['owner', 'address'],
+    });
+  }
 
-    findAll(): Promise<Barbershop[]> {
-        return this.repository.find({ 
-            relations: ['owner', 'address'] 
-        });
+  findOne(params: any): Promise<Barbershop> {
+    return this.repository.findOne({ where: params });
+  }
+
+  findById(id: number): Promise<Barbershop> {
+    return this.repository.findOne({
+      where: { id },
+      relations: ['owner'],
+    });
+  }
+
+  async create(createBarbershopDto: CreateBarbershopDto): Promise<Barbershop> {
+    const owner = await this.userRepository.findById(
+      createBarbershopDto.ownerId,
+    );
+
+    if (!owner) {
+      throw new NotFoundException('Owner not found');
     }
 
-    findOne(params: any): Promise<Barbershop> {
-        return this.repository.findOne({where: params});
-    }
+    const barbershop = this.repository.create({
+      ...createBarbershopDto,
+      owner,
+    });
 
-    findById(id: number): Promise<Barbershop> {
-        return this.repository.findOne({
-        where: { id },
-        relations: ['owner'],
-        });
-    }
-  
-    async create(createBarbershopDto: CreateBarbershopDto): Promise<Barbershop> {
-        const owner = await this.userRepository.findById(createBarbershopDto.ownerId);
-        
-        if (!owner) {
-            throw new NotFoundException('Owner not found');
-        }
+    const savedBarbershop = await this.repository.save(barbershop);
 
-        const barbershop = this.repository.create({
-            ...createBarbershopDto,
-            owner,
-        });
+    // Retorna a barbearia com todas as relações necessárias
+    return this.repository.findOne({
+      where: { id: savedBarbershop.id },
+      relations: ['owner', 'address'],
+    });
+  }
 
-        const savedBarbershop = await this.repository.save(barbershop);
-        
-        // Retorna a barbearia com todas as relações necessárias
-        return this.repository.findOne({
-            where: { id: savedBarbershop.id },
-            relations: ['owner', 'address']
-        });
-    }
+  async update(
+    id: number,
+    updateBarbershopDto: UpdateBarbershopDto,
+  ): Promise<void> {
+    const barbershop = await this.findById(id);
+    await this.repository.update(id, { ...barbershop, ...updateBarbershopDto });
+  }
 
-    async update(id: number, updateBarbershopDto: UpdateBarbershopDto): Promise<void> {
-        const barbershop = await this.findById(id);
-        await this.repository.update(id, { ...barbershop, ...updateBarbershopDto });
-    }
-
-    async delete(id: number): Promise<void> {
-        const barbershop = await this.findById(id);
-        await this.repository.delete(barbershop.id);
-    }
+  async delete(id: number): Promise<void> {
+    const barbershop = await this.findById(id);
+    await this.repository.delete(barbershop.id);
+  }
 }

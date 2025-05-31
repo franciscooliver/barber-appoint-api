@@ -33,7 +33,7 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOneById(id);
-    
+
     if (!user) {
       throw new NotFoundException(`User with ID ${id} not found`);
     }

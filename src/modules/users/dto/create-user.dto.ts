@@ -1,5 +1,11 @@
 import { Address } from '@modules/addresses/entities/address.entity';
-import { IsIn, IsNotEmpty, IsObject, IsOptional, MinLength } from 'class-validator';
+import {
+  IsIn,
+  IsNotEmpty,
+  IsObject,
+  IsOptional,
+  MinLength,
+} from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -18,5 +24,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsObject()
-  address?: Address; 
+  address?: Address;
 }

@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { User } from '@modules/users/entities/user.entity';
 import { Barbershop } from '@modules/barbershops/entities/barbershop.entity';
 import { Service } from '@modules/services/entities/service.entity';
@@ -26,11 +32,13 @@ export class Appointment {
 
   @Column()
   status: string;
-  
+
   @Column({ name: 'collaborator_id', nullable: true })
   collaboratorId: number;
 
-  @ManyToOne(() => Collaborator, (collaborator) => collaborator.appointments, { nullable: true })
+  @ManyToOne(() => Collaborator, (collaborator) => collaborator.appointments, {
+    nullable: true,
+  })
   @JoinColumn({ name: 'collaborator_id' })
   collaborator?: Collaborator;
 }

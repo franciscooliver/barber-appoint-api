@@ -1,4 +1,4 @@
-import { Address } from "@modules/addresses/entities/address.entity";
+import { Address } from '@modules/addresses/entities/address.entity';
 
 export class UserDto {
   id?: number;
@@ -8,4 +8,3 @@ export class UserDto {
   isActive: boolean;
   address?: Address;
 }
-  

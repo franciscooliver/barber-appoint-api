@@ -27,7 +27,7 @@ import { SettingsModule } from '@modules/settings/settings.module';
     ServicesModule,
     AddressesModule,
     CollaboratorsModule,
-    SettingsModule
+    SettingsModule,
   ],
 })
 export class AppModule implements NestModule {
@@ -35,12 +35,12 @@ export class AppModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .forRoutes(
-        'appointments', 
-        'barbershops', 
-        'users', 
+        'appointments',
+        'barbershops',
+        'users',
         'collaborators',
         'services',
-        'settings'
+        'settings',
       ); // Remove 'api' prefix from routes
   }
 }

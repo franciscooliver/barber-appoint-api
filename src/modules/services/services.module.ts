@@ -8,10 +8,7 @@ import { ServicesRepository } from '@modules/services/repositories/service.repos
 import { BarbershopsModule } from '@modules/barbershops/barbershops.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Service]),
-    BarbershopsModule
-  ],
+  imports: [TypeOrmModule.forFeature([Service]), BarbershopsModule],
   providers: [ServicesService, ServicesRepository],
   controllers: [ServicesController],
   exports: [ServicesService, ServicesRepository],

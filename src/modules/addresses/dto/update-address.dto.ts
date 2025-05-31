@@ -1,7 +1,6 @@
 import { IsString, IsOptional, Length, Matches } from 'class-validator';
 
 export class UpdateAddressDto {
-
   @IsOptional()
   @IsString()
   country?: string;
@@ -28,7 +27,7 @@ export class UpdateAddressDto {
 
   @IsOptional()
   @IsString()
-  state?: string; 
+  state?: string;
 
   @IsOptional()
   @IsString()

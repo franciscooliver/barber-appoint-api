@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Appointment } from '@modules/appointments/entities/appointment.entity';
 import { Address } from '@modules/addresses/entities/address.entity';
 
@@ -12,15 +19,16 @@ export class Collaborator {
 
   @Column({ unique: true })
   email: string;
-  
+
   @Column({ nullable: true })
   phone?: string;
 
   @OneToMany(() => Appointment, (appointment) => appointment.collaborator)
   appointments: Appointment[];
 
-  // Novo relacionamento com Address
-  @OneToOne(() => Address, (address) => address.collaborator, { nullable: true })
+  @OneToOne(() => Address, (address) => address.collaborator, {
+    nullable: true,
+  })
   @JoinColumn()
   address?: Address;
 }

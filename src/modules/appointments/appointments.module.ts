@@ -12,14 +12,13 @@ import { BarbershopsRepository } from '@modules/barbershops/repositories/barbers
 import { ServicesModule } from '@modules/services/services.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([Appointment]),
-        BarbershopsModule,
-        UsersModule,
-        ServicesModule
-    ],
-    controllers: [AppointmentsController],
-    providers: [AppointmentsService, AppointmentRepository],
-
+  imports: [
+    TypeOrmModule.forFeature([Appointment]),
+    BarbershopsModule,
+    UsersModule,
+    ServicesModule,
+  ],
+  controllers: [AppointmentsController],
+  providers: [AppointmentsService, AppointmentRepository],
 })
 export class AppointmentsModule {}

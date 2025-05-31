@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Patch,
+} from '@nestjs/common';
 import { User } from '@modules/users/entities/user.entity';
 import { UsersService } from '@modules/users/services/users.service';
 import { AuthGuard } from '@nestjs/passport';

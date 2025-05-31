@@ -15,7 +15,7 @@ export class TokenBlacklistService {
   }
 
   async isTokenRevoked(token: string): Promise<boolean> {
-    const result =  await this.tokenBlacklistRepository.isTokenRevoked(token);
+    const result = await this.tokenBlacklistRepository.isTokenRevoked(token);
     return !!result;
   }
 }

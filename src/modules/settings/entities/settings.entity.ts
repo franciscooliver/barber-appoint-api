@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
 import { Exclude } from 'class-transformer';
 
 @Entity('settings')
@@ -12,10 +18,11 @@ export class Settings {
 
   @Column('json')
   workingHours: {
-    [key: number]: { // day number (0-6)
+    [key: number]: {
+      // day number (0-6)
       start: string; // format "HH:mm"
-      end: string;   // format "HH:mm"
-      intervals: string[]; 
+      end: string; // format "HH:mm"
+      intervals: string[];
       isActive: boolean;
     };
   };

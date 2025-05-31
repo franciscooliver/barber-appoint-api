@@ -30,7 +30,7 @@ export class ServicesService {
     if (!service) {
       throw new NotFoundException(`Service with ID ${id} not found`);
     }
-    
+
     return this.servicesRepository.updateStatus(id, !service.isActive);
   }
 

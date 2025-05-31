@@ -1,32 +1,42 @@
-import { IsArray, IsObject, IsString, IsNumber, IsOptional, Min, Max, MaxLength, IsBoolean } from 'class-validator';
+import {
+  IsArray,
+  IsObject,
+  IsString,
+  IsNumber,
+  IsOptional,
+  Min,
+  Max,
+  MaxLength,
+  IsBoolean,
+} from 'class-validator';
 
 export class WorkingHoursDTO {
-    @IsString()
-    start: string;
+  @IsString()
+  start: string;
 
-    @IsString()
-    end: string;
+  @IsString()
+  end: string;
 
-    @IsOptional()
-    @IsBoolean()
-    isActive: boolean;
+  @IsOptional()
+  @IsBoolean()
+  isActive: boolean;
 }
 
 export class UpdateSettingsDTO {
-    @IsArray()
-    @Min(0, { each: true })
-    @Max(7, { each: true })
-    workingDays: number[];
+  @IsArray()
+  @Min(0, { each: true })
+  @Max(7, { each: true })
+  workingDays: number[];
 
-    @IsObject()
-    workingHours: {
-        [key: number]: WorkingHoursDTO;
-    };
+  @IsObject()
+  workingHours: {
+    [key: number]: WorkingHoursDTO;
+  };
 
-    @IsNumber()
-    intervalTime: number;
+  @IsNumber()
+  intervalTime: number;
 
-    @IsOptional()
-    @IsBoolean()
-    isActive: boolean;
+  @IsOptional()
+  @IsBoolean()
+  isActive: boolean;
 }

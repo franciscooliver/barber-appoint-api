@@ -1,5 +1,11 @@
 import { Address } from '@modules/addresses/entities/address.entity';
-import { IsNotEmpty, IsEmail, IsOptional, IsString, IsPhoneNumber } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsEmail,
+  IsOptional,
+  IsString,
+  IsPhoneNumber,
+} from 'class-validator';
 
 export class CreateCollaboratorDto {
   @IsNotEmpty()
@@ -9,7 +15,7 @@ export class CreateCollaboratorDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  
+
   @IsNotEmpty()
   @IsPhoneNumber('BR')
   @IsString()
