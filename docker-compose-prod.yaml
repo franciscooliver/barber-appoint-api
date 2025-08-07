@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: franciscoalves90/barber-appoint:v4
+    image: franciscoalves90/barber-appoint:v1
     container_name: api-barber-appoint
     restart: always
     ports:
