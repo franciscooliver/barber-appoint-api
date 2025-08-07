@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: barber-appoint-api
-          image: "franciscoalves90/barber-appoint:v2"
+          image: "franciscoalves90/barber-appoint:v4"
 #          env:
 #            - name: PORT
 #              value: "3001"

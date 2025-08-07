@@ -12,13 +12,13 @@ import { QueryFailedError } from 'typeorm';
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     console.log(exception);
-    
+
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let message: string|object = 'Internal server error';
+    let message: string | object = 'Internal server error';
 
     if (exception instanceof QueryFailedError) {
       const errorCode = (exception as any).code; // Código do erro do banco
@@ -32,11 +32,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message = `O valor fornecido para a coluna "${column}" já está em uso.`;
         status = HttpStatus.CONFLICT;
       }
-    } 
-    
+    }
+
     if (exception instanceof HttpException) {
       status = exception.getStatus();
-      message = exception.getResponse() as string|object;
+      message = exception.getResponse() as string | object;
 
       if (typeof message === 'object' && 'message' in message) {
         message = (message as any).message;

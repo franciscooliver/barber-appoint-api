@@ -24,7 +24,7 @@ export class UsersRepository {
     return this.repository.findOne({ where: params });
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {    
+  async findOneByEmail(email: string): Promise<User | undefined> {
     return this.repository
       .createQueryBuilder('user')
       .addSelect('user.password')
@@ -44,12 +44,12 @@ export class UsersRepository {
       .createQueryBuilder()
       .update(User)
       .set(user)
-      .where("id = :id", { id: user.id })
+      .where('id = :id', { id: user.id })
       .execute();
-    
+
     return this.repository.findOne({
       where: { id: user.id },
-      relations: ['address']
+      relations: ['address'],
     });
   }
 }

@@ -12,14 +12,23 @@ export class CollaboratorsService {
     private collaboratorRepository: Repository<Collaborator>,
   ) {}
 
-  async create(createCollaboratorDto: CreateCollaboratorDto): Promise<Collaborator> {
-    const collaborator = this.collaboratorRepository.create(createCollaboratorDto);
+  async create(
+    createCollaboratorDto: CreateCollaboratorDto,
+  ): Promise<Collaborator> {
+    const collaborator = this.collaboratorRepository.create(
+      createCollaboratorDto,
+    );
     return await this.collaboratorRepository.save(collaborator);
   }
 
-  async update(id: number, updateCollaboratorDto: UpdateCollaboratorDto): Promise<Collaborator> {
-    const collaborator = await this.collaboratorRepository.findOne({ where: { id } });
-    
+  async update(
+    id: number,
+    updateCollaboratorDto: UpdateCollaboratorDto,
+  ): Promise<Collaborator> {
+    const collaborator = await this.collaboratorRepository.findOne({
+      where: { id },
+    });
+
     if (!collaborator) {
       throw new NotFoundException(`Collaborator with ID ${id} not found`);
     }
@@ -31,7 +40,7 @@ export class CollaboratorsService {
   async findOne(id: number): Promise<Collaborator> {
     const collaborator = await this.collaboratorRepository.findOne({
       where: { id },
-      relations: ['address']
+      relations: ['address'],
     });
 
     if (!collaborator) {

@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UseFilters } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UseInterceptors,
+  UseFilters,
+} from '@nestjs/common';
 import { AppointmentsService } from '@modules/appointments/services/appointments.service';
 import { CreateAppointmentDto } from '@modules/appointments/dto/create-appointment.dto';
 import { UpdateAppointmentDto } from '@modules/appointments/dto/update-appointment.dto';
@@ -13,52 +24,56 @@ import { UpdateStatusDto } from '../dto/update-status.dto';
 @UseInterceptors(SuccessResponseInterceptor)
 @UseFilters(HttpExceptionFilter)
 export class AppointmentsController {
-    constructor(
-        private readonly appointmentsService: AppointmentsService
-    ) {}
+  constructor(private readonly appointmentsService: AppointmentsService) {}
 
-    @UseGuards(AuthGuard('jwt'))
-    @Post()
-    create(@Body() createAppointmentDto: CreateAppointmentDto, @GetUser() user: User) { 
-        return this.appointmentsService.create({...createAppointmentDto, user });
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Post()
+  create(
+    @Body() createAppointmentDto: CreateAppointmentDto,
+    @GetUser() user: User,
+  ) {
+    return this.appointmentsService.create({ ...createAppointmentDto, user });
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Get()
-    findAll() {
-        return this.appointmentsService.findAll();
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Get()
+  findAll() {
+    return this.appointmentsService.findAll();
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Get(':id')
-    findOne(@Param('id') id: string) {
-        return this.appointmentsService.findOne(+id);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.appointmentsService.findOne(+id);
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Patch(':id')
-    update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
-        return this.appointmentsService.update(+id, updateAppointmentDto);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateAppointmentDto: UpdateAppointmentDto,
+  ) {
+    return this.appointmentsService.update(+id, updateAppointmentDto);
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Delete(':id')
-    remove(@Param('id') id: string) {
-        return this.appointmentsService.remove(+id);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.appointmentsService.remove(+id);
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Post(':id/cancel')
-    cancelAppointment(@Param('id') id: string) {
-        return this.appointmentsService.cancelAppointment(+id);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Post(':id/cancel')
+  cancelAppointment(@Param('id') id: string) {
+    return this.appointmentsService.cancelAppointment(+id);
+  }
 
-    @UseGuards(AuthGuard('jwt'))
-    @Patch(':id/status')
-    updateStatus(
-        @Param('id') id: string,
-        @Body() updateStatusDto: UpdateStatusDto
-    ) {
-        return this.appointmentsService.updateStatus(+id, updateStatusDto);
-    }
+  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id/status')
+  updateStatus(
+    @Param('id') id: string,
+    @Body() updateStatusDto: UpdateStatusDto,
+  ) {
+    return this.appointmentsService.updateStatus(+id, updateStatusDto);
+  }
 }

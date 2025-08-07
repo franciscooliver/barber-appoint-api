@@ -15,8 +15,8 @@ async function bootstrap() {
 
   // Aplicar Interceptor para respostas de sucesso
   app.useGlobalInterceptors(
-    new SuccessResponseInterceptor(), 
-    new ClassSerializerInterceptor(app.get(Reflector))
+    new SuccessResponseInterceptor(),
+    new ClassSerializerInterceptor(app.get(Reflector)),
   );
 
   // Aplicar Filtro de Exceções para erros
@@ -24,12 +24,12 @@ async function bootstrap() {
 
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,   // Remove propriedades não declaradas nos DTOs
+      whitelist: true, // Remove propriedades não declaradas nos DTOs
       forbidNonWhitelisted: true, // Rejeita requisições com propriedades não declaradas
-      transform: true,    // Transforma o payload para os tipos esperados nos DTOs
+      transform: true, // Transforma o payload para os tipos esperados nos DTOs
     }),
   );
-  
+
   await app.listen(process.env.PORT, '0.0.0.0');
   // Executa a seed após o app iniciar
   await seedDefaultUser();

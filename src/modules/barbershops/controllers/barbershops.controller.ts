@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Param, Patch, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Barbershop } from '@modules/barbershops/entities/barbershop.entity';
 import { BarbershopsService } from '@modules/barbershops/services/barbershops.service';
@@ -13,8 +22,14 @@ export class BarbershopsController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  async create(@Body() createBarbershopDto: CreateBarbershopDto, @GetUser() user: User): Promise<Barbershop> {
-    return this.barbershopService.create({...createBarbershopDto, ownerId: createBarbershopDto.ownerId ?? user.id });
+  async create(
+    @Body() createBarbershopDto: CreateBarbershopDto,
+    @GetUser() user: User,
+  ): Promise<Barbershop> {
+    return this.barbershopService.create({
+      ...createBarbershopDto,
+      ownerId: createBarbershopDto.ownerId ?? user.id,
+    });
   }
 
   @UseGuards(AuthGuard('jwt'))

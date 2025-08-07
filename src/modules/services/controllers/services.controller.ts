@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Patch } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Patch,
+} from '@nestjs/common';
 import { ServicesService } from '@modules/services/services/services.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CreateServiceDto } from '@modules/services/dto/create-service.dto';
@@ -16,7 +24,7 @@ export class ServicesController {
   @UseGuards(AuthGuard('jwt'))
   @Get('active')
   findActive() {
-    return this.servicesService.findActive(); 
+    return this.servicesService.findActive();
   }
 
   @UseGuards(AuthGuard('jwt'))

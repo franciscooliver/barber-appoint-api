@@ -1,31 +1,41 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { IsString, IsOptional, Length, Matches } from 'class-validator';
 
 export class UpdateAddressDto {
-  @IsString()
-  @IsNotEmpty()
-  street: string;
-
-  @IsString()
-  @IsNotEmpty()
-  number: string;
-
-  @IsString()
   @IsOptional()
+  @IsString()
+  country?: string;
+
+  @IsOptional()
+  @IsString()
+  street?: string;
+
+  @IsOptional()
+  @IsString()
+  number?: string;
+
+  @IsOptional()
+  @IsString()
   complement?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  neighborhood: string;
+  neighborhood?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  city: string;
+  city?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  state: string;
+  state?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  zipCode: string;
+  zipcode?: string;
+
+  @IsOptional()
+  @IsString()
+  @Length(2, 2, { message: 'UF must be exactly 2 characters' })
+  @Matches(/^[A-Z]{2}$/, { message: 'UF must be 2 uppercase letters' })
+  uf?: string;
 }

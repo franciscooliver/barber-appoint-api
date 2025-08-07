@@ -9,10 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 @Module({
   controllers: [BarbershopsController],
   imports: [TypeOrmModule.forFeature([Barbershop]), UsersModule],
-  providers: [
-    BarbershopsService, 
-    BarbershopsRepository
-  ],
-  exports: [BarbershopsService, BarbershopsRepository]
+  providers: [BarbershopsService, BarbershopsRepository],
+  exports: [BarbershopsService, BarbershopsRepository],
 })
 export class BarbershopsModule {}

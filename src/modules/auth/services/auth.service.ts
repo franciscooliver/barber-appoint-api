@@ -11,9 +11,9 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<User | null> {
-    const user = await this.usersService.findOneByEmail(email);  // Método que busca o usuário pelo e-mail
-    
-    if (user && (await user.validatePassword(password))) { 
+    const user = await this.usersService.findOneByEmail(email); // Método que busca o usuário pelo e-mail
+
+    if (user && (await user.validatePassword(password))) {
       return user;
     }
     return null;
@@ -28,7 +28,7 @@ export class AuthService {
       isActive: user.isActive,
       role: user.role,
       address: user.address,
-      access_token: this.jwtService.sign(payload),  // Usa o JwtService com a chave configurada
+      access_token: this.jwtService.sign(payload), // Usa o JwtService com a chave configurada
     };
   }
 }

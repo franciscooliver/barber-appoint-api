@@ -19,11 +19,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) =>  ({
-        secret: configService.get<string>('JWT_SECRET'), 
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
         signOptions: { expiresIn: '1h' },
-      })
-      ,
+      }),
     }),
     TypeOrmModule.forFeature([TokenBlacklist]),
     UsersModule,
@@ -32,16 +31,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   controllers: [AuthController],
   providers: [
     AuthService,
-    JwtStrategy, 
+    JwtStrategy,
     ConfigService,
     TokenBlacklistService,
     TokenBlacklistRepository,
     AuthMiddleware,
   ],
-  exports: [
-    TokenBlacklistService, 
-    AuthService, 
-    JwtModule
-  ]
+  exports: [TokenBlacklistService, AuthService, JwtModule],
 })
 export class AuthModule {}

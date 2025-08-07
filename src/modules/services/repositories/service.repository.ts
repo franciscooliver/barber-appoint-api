@@ -7,12 +7,11 @@ import { CreateServiceDto } from '../dto/create-service.dto';
 
 @Injectable()
 export class ServicesRepository {
-
   constructor(
     @InjectRepository(Service)
-    private repository: Repository<Service>
+    private repository: Repository<Service>,
   ) {}
-  
+
   findAll(): Promise<Service[]> {
     return this.repository.find();
   }
@@ -37,7 +36,7 @@ export class ServicesRepository {
 
   findActive(): Promise<Service[]> {
     return this.repository.find({
-      where: { isActive: true }
+      where: { isActive: true },
     });
   }
 }
